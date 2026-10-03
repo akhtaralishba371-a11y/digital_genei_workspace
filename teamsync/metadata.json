@@ -1,0 +1,6 @@
+{
+  "name": "TeamSync",
+  "description": "The Ultimate Enterprise Collaboration Platform combining real-time communication, docs, and issue tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

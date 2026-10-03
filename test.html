@@ -1,0 +1,477 @@
+<!-- AffirmX: original design, recolored with real brand palette -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AffirmX: Re-imagining Risk Intelligence</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root{
+    --ink:#0E1A1E;
+    --ink-soft:#46555C;
+    --muted:#7A878D;
+    --green:#8CC63F;
+    --green-deep:#6FA22B;
+    --teal-logo:#1F86AD;
+    --steel:#0B6E96;
+    --steel-deep:#085877;
+    --navy:#062E36;
+    --navy-2:#0B3D48;
+    --slate:#2E3A44;
+    --mist:#F2F4F5;
+    --tint:#ECF5DC;
+    --line:#E2E7E8;
+    --paper:#FFFFFF;
+    --shadow:0 24px 60px -28px rgba(6,46,54,.40);
+    --shadow-soft:0 14px 40px -22px rgba(6,46,54,.30);
+    --display:"Space Grotesk",system-ui,sans-serif;
+    --body:"Inter",system-ui,sans-serif;
+    --mono:"Space Mono",ui-monospace,monospace;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green-deep)}
+  h1,h2,h3{font-family:var(--display);line-height:1.04;letter-spacing:-.02em;font-weight:700}
+
+  /* NAV */
+  header{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .35s,box-shadow .35s,padding .35s;padding:20px 0}
+  header.scrolled{background:rgba(255,255,255,.86);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);padding:12px 0}
+  header:not(.scrolled) .word{color:#fff}
+  header:not(.scrolled) .word b{color:var(--green)}
+  header:not(.scrolled) .links a{color:rgba(255,255,255,.84)}
+  header:not(.scrolled) .signin{color:rgba(255,255,255,.84)}
+  header:not(.scrolled) .burger span{background:#fff}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand .bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+  .brand .bars i{width:5px;border-radius:2px;display:block}
+  .brand .bars i:nth-child(1){height:42%;background:var(--teal-logo)}
+  .brand .bars i:nth-child(2){height:72%;background:var(--teal-logo)}
+  .brand .bars i:nth-child(3){height:100%;background:var(--green)}
+  .brand .bars i:nth-child(4){height:60%;background:var(--green)}
+  .brand .word{font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
+  .brand .word b{color:var(--green-deep)}
+  .links{display:flex;align-items:center;gap:28px}
+  .links a{font-size:.92rem;color:var(--ink-soft);font-weight:500;position:relative}
+  .links a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--green);transition:width .3s}
+  .links a:hover{color:var(--ink)}.links a:hover::after{width:100%}
+  .btn{font-family:var(--body);font-weight:600;font-size:.9rem;border:none;cursor:pointer;padding:11px 22px;border-radius:6px;display:inline-flex;align-items:center;gap:8px;transition:transform .25s,box-shadow .25s,background .25s}
+  .btn-primary{background:var(--green);color:#143a00;box-shadow:0 12px 28px -14px var(--green)}
+  .btn-primary:hover{background:var(--green-deep);color:#fff;transform:translateY(-2px);box-shadow:0 18px 34px -14px var(--green)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--green);color:var(--green-deep)}
+  .nav-cta{display:flex;align-items:center;gap:18px}
+  .nav-cta .signin{font-size:.92rem;font-weight:500;color:var(--ink-soft)}
+  .burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px}
+  .burger span{width:24px;height:2px;background:var(--ink);border-radius:2px}
+
+  /* HERO (dark, with animated data-network background) */
+  .hero{padding:172px 0 96px;position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,var(--navy) 0%,#083a44 52%,var(--navy-2) 100%)}
+  #netbg{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+  .hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 70px),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 70px);-webkit-mask-image:radial-gradient(circle at 50% 38%,#000,transparent 80%);mask-image:radial-gradient(circle at 50% 38%,#000,transparent 80%)}
+  .hero .wrap{position:relative;z-index:1}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:54px;align-items:center}
+  .hero .eyebrow{color:var(--green)}
+  .hero h1{font-size:clamp(2.4rem,5.4vw,4.15rem);margin:20px 0 18px;color:#fff}
+  .hero h1 .em{color:var(--green)}
+  .hero .lede{font-size:1.16rem;color:rgba(255,255,255,.80);max-width:30ch;margin-bottom:30px}
+  .hero .hero-note{color:rgba(255,255,255,.64)}
+  .hero .dash-card{box-shadow:0 36px 80px -32px rgba(0,0,0,.65)}
+  .hero-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .hero-note{font-size:.86rem;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px var(--tint)}
+
+  .dash{position:relative;perspective:1600px}
+  .dash-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;transform:rotateY(-9deg) rotateX(4deg);transform-style:preserve-3d}
+  .dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .dash-top .t{font-family:var(--display);font-weight:600;font-size:.98rem}
+  .pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep);background:var(--tint);padding:5px 10px;border-radius:999px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+  .stat{background:var(--mist);border-radius:12px;padding:12px}
+  .stat .lbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono)}
+  .stat .num{font-family:var(--display);font-weight:700;font-size:1.5rem;margin-top:4px;letter-spacing:-.02em;color:var(--navy)}
+  .stat .num.up{color:var(--green-deep)}
+  .chart{background:var(--mist);border-radius:12px;padding:14px 12px 8px}
+  .chart svg{display:block;width:100%;height:120px;overflow:visible}
+  .floaty{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-soft);padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .floaty .ic{width:34px;height:34px;border-radius:9px;background:var(--tint);display:grid;place-items:center;color:var(--green-deep)}
+  .floaty .ic.b{background:rgba(31,134,173,.14);color:var(--steel)}
+  .floaty .meta b{font-family:var(--display);font-size:.85rem;display:block}
+  .floaty .meta span{font-size:.7rem;color:var(--muted)}
+  .floaty.f1{top:-26px;right:30px}
+  .floaty.f2{bottom:-26px;left:-26px}
+
+  section{position:relative}
+  .pad{padding:96px 0}
+  .head{max-width:640px;margin-bottom:54px}
+  .head h2{font-size:clamp(1.9rem,3.6vw,2.8rem);margin:14px 0 0}
+
+  /* PILLARS */
+  .pillars{background:var(--mist)}
+  .pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 26px;border-top:4px solid var(--green);transition:transform .35s,box-shadow .35s,border-color .35s}
+  .pcard:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+  .pcard .ic{width:50px;height:50px;border-radius:13px;background:var(--tint);display:grid;place-items:center;color:var(--green-deep);margin-bottom:20px;font-size:1.2rem}
+  .pcard h3{font-size:1.32rem;margin-bottom:12px}
+  .pcard p{color:var(--ink-soft);font-size:.95rem}
+  .pcard .bars{display:flex;align-items:flex-end;gap:6px;height:54px;margin-top:20px}
+  .pcard .bars i{flex:1;background:linear-gradient(180deg,var(--green),var(--green-deep));border-radius:4px 4px 0 0;display:block}
+  .pcard .tag{font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:18px;text-transform:uppercase;letter-spacing:.1em}
+
+  /* CLIENT STORY */
+  .story-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:54px;align-items:center}
+  .quote{font-family:var(--display);font-weight:500;font-size:clamp(1.5rem,2.8vw,2.2rem);line-height:1.22;letter-spacing:-.02em;position:relative;padding-left:30px}
+  .quote::before{content:"\201C";position:absolute;left:-6px;top:-22px;font-size:5rem;color:var(--tint);font-family:Georgia,serif;line-height:1}
+  .quote em{color:var(--green-deep);font-style:normal}
+  .author{display:flex;align-items:center;gap:14px;margin-top:30px}
+  .author .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--teal-logo),var(--navy));display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:700}
+  .author b{display:block;font-family:var(--display)}
+  .author span{font-size:.85rem;color:var(--muted)}
+  .psr{display:flex;flex-direction:column;gap:14px}
+  .psr .row{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;border-left:3px solid var(--green)}
+  .psr .row .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep);margin-bottom:6px}
+  .psr .row p{font-size:.95rem;color:var(--ink-soft)}
+
+  /* INSIGHTS */
+  .insights{background:var(--mist)}
+  .acards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .acard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .35s,box-shadow .35s}
+  .acard:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+  .acard .img{height:158px;overflow:hidden;position:relative;background:linear-gradient(135deg,var(--navy),var(--steel))}
+  .acard:nth-child(2) .img{background:linear-gradient(135deg,var(--steel),var(--teal-logo))}
+  .acard:nth-child(3) .img{background:linear-gradient(135deg,var(--navy-2),var(--green-deep))}
+  .acard .img::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 1px,transparent 1px 26px),repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 1px,transparent 1px 26px)}
+  .acard .img svg{position:absolute;inset:0;width:100%;height:100%}
+  .acard .body{padding:22px 22px 26px}
+  .acard .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep)}
+  .acard h3{font-size:1.18rem;margin:10px 0 10px;line-height:1.2}
+  .acard p{font-size:.9rem;color:var(--ink-soft);margin-bottom:16px}
+  .read{font-family:var(--mono);font-size:.78rem;color:var(--green-deep);font-weight:700;display:inline-flex;gap:6px;align-items:center}
+  .read .arrow{transition:transform .3s}
+  .acard:hover .read .arrow{transform:translateX(5px)}
+
+  /* CAPABILITY NETWORK */
+  .net-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:54px;align-items:center}
+  .net-stage{position:relative;aspect-ratio:1/.92}
+  .net-stage svg{width:100%;height:100%;overflow:visible}
+  .net-link{stroke:var(--line);stroke-width:1.5;fill:none}
+  .net-link.live{stroke:var(--green)}
+  .hexg .hx{fill:#fff;stroke:var(--line);stroke-width:1.5;transition:fill .3s,stroke .3s}
+  .hexg .lab{font-family:var(--display);font-size:11px;font-weight:600;fill:var(--ink);text-anchor:middle}
+  .hexg .center .hx{fill:var(--steel);stroke:var(--navy)}
+  .hexg .center .lab{fill:#fff}
+  .hexg g.node:hover .hx{fill:var(--tint);stroke:var(--green)}
+  .net-copy .feat{display:flex;gap:14px;margin-top:22px}
+  .net-copy .feat .ic{width:40px;height:40px;border-radius:11px;background:var(--tint);display:grid;place-items:center;color:var(--green-deep);flex:none}
+  .net-copy .feat b{font-family:var(--display);display:block;margin-bottom:3px}
+  .net-copy .feat span{font-size:.9rem;color:var(--ink-soft)}
+
+  /* CTA */
+  .cta{background:linear-gradient(125deg,var(--navy) 0%,var(--navy-2) 45%,var(--steel) 100%);color:#fff;border-radius:28px;padding:64px 56px;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;top:-80px;right:-60px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(140,198,63,.40),transparent 60%)}
+  .cta .inner{position:relative;display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+  .cta h2{font-size:clamp(2rem,4vw,3.1rem);line-height:1.02}
+  .cta h2 .o{color:var(--green)}
+  .cta p{color:rgba(255,255,255,.84);margin:16px 0 0;max-width:38ch}
+  .form{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:26px;backdrop-filter:blur(6px)}
+  .form label{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+  .form input{width:100%;margin:8px 0 18px;padding:14px 16px;border-radius:11px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#fff;font-family:var(--body);font-size:.95rem;outline:none;transition:border-color .25s}
+  .form input::placeholder{color:rgba(255,255,255,.55)}
+  .form input:focus{border-color:var(--green)}
+  .form .btn{width:100%;justify-content:center}
+  .form .ok{font-size:.82rem;color:var(--green);margin-top:12px;text-align:center;min-height:1em}
+  .contacts{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
+  .contacts .c{display:flex;gap:10px;align-items:center}
+  .contacts .av{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:.8rem}
+  .contacts b{display:block;font-family:var(--display);font-size:.9rem}
+  .contacts span{font-size:.78rem;color:rgba(255,255,255,.68)}
+
+  footer{padding:46px 0;border-top:1px solid var(--line);margin-top:90px}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .foot .copy{font-size:.85rem;color:var(--muted)}
+  .foot .social{display:flex;gap:14px}
+  .foot .social a{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-soft);transition:all .25s}
+  .foot .social a:hover{background:var(--green);color:#143a00;border-color:var(--green);transform:translateY(-3px)}
+
+  .rv{opacity:0}
+
+  @media(max-width:920px){
+    .hero-grid,.story-grid,.net-grid,.cta .inner{grid-template-columns:1fr;gap:42px}
+    .pcards,.acards{grid-template-columns:1fr}
+    .links,.nav-cta .signin{display:none}.burger{display:flex}
+    .hero{padding:130px 0 70px}.cta{padding:42px 28px}
+    .dash-card{transform:none}.floaty.f2{left:0}
+  }
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important}html{scroll-behavior:auto}}
+</style>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#"><span class="bars"><i></i><i></i><i></i><i></i></span><span class="word">Affirm<b>X</b></span></a>
+    <nav class="links">
+      <a href="#pillars">Solutions</a><a href="#story">Trust</a><a href="#net">Platform</a><a href="#insights">Insights</a><a href="#cta">Company</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="signin" href="#">Sign in</a>
+      <button class="btn btn-primary" onclick="document.getElementById('cta').scrollIntoView()">Request demo</button>
+      <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="netbg"></canvas>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow rv" data-rv>Risk intelligence platform</span>
+      <h1><span class="rv" data-rv>Re-imagining</span> <span class="rv em" data-rv>risk intelligence.</span><br><span class="rv" data-rv>Re-defining</span> <span class="rv em" data-rv>compliance.</span></h1>
+      <p class="lede rv" data-rv>AffirmX brings monitoring, audit, and remediation onto one connected platform, built for the modern financial institution.</p>
+      <div class="hero-cta rv" data-rv>
+        <button class="btn btn-primary" onclick="document.getElementById('cta').scrollIntoView()">Book a demo →</button>
+        <span class="hero-note"><span class="dot"></span>Trusted by 400+ banks &amp; credit unions</span>
+      </div>
+    </div>
+    <div class="dash" id="dash">
+      <div class="dash-card">
+        <div class="dash-top"><span class="t">Risk Dashboard</span><span class="pill">Live</span></div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Open findings</div><div class="num" data-count="284">0</div></div>
+          <div class="stat"><div class="lbl">Resolved</div><div class="num up" data-count="1962">0</div></div>
+          <div class="stat"><div class="lbl">Score</div><div class="num up" data-count="93" data-suffix="%">0</div></div>
+        </div>
+        <div class="chart">
+          <svg viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B6E96" stop-opacity=".26"/><stop offset="1" stop-color="#0B6E96" stop-opacity="0"/></linearGradient></defs>
+            <path id="area" d="M0,96 L40,82 L80,90 L120,60 L160,68 L200,38 L240,46 L280,22 L320,30 L320,120 L0,120 Z" fill="url(#g)" opacity="0"/>
+            <path id="line" d="M0,96 L40,82 L80,90 L120,60 L160,68 L200,38 L240,46 L280,22 L320,30" fill="none" stroke="#0B6E96" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="floaty f1" id="f1"><span class="ic">▲</span><span class="meta"><b>Risk Intel</b><span>+18% this quarter</span></span></div>
+      <div class="floaty f2" id="f2"><span class="ic b">✓</span><span class="meta"><b>Audit ready</b><span>SOC 2 · ISO 27001</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars pad" id="pillars">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv" data-rv>What sets us apart</span>
+      <h2 class="rv" data-rv>One platform for the people, the technology, and the thinking behind better risk decisions.</h2>
+    </div>
+    <div class="pcards">
+      <article class="pcard rv" data-rv>
+        <div class="ic">◆</div><h3>About us</h3>
+        <p>We started AffirmX after watching teams drown in spreadsheets and disconnected tools. Our purpose is simple: make institutional risk and compliance feel manageable, current, and clear.</p>
+        <div class="tag">Founded for financial institutions</div>
+      </article>
+      <article class="pcard rv" data-rv>
+        <div class="ic">▥</div><h3>Technology</h3>
+        <p>Model-driven monitoring flags emerging exposure before it lands on an examiner's desk. Connected workflows turn findings into remediation without anyone re-keying a thing.</p>
+        <div class="bars" data-bars><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:58%"></i><i style="height:94%"></i><i style="height:72%"></i></div>
+      </article>
+      <article class="pcard rv" data-rv>
+        <div class="ic">◎</div><h3>People</h3>
+        <p>Behind the platform sits a team of former examiners, risk officers, and engineers. We pair real regulatory experience with software that respects how your day actually works.</p>
+        <div class="tag">Built by ex-examiners &amp; risk officers</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT STORY -->
+<section class="pad" id="story">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow rv" data-rv>Client story</span><h2 class="rv" data-rv>From scattered reviews to a single source of truth.</h2></div>
+    <div class="story-grid">
+      <div>
+        <p class="quote rv" data-rv>"We replaced three tools and a quarter's worth of manual reviews with AffirmX. Now our committee sees <em>one accurate picture</em> of risk, and so does our examiner."</p>
+        <div class="author rv" data-rv><span class="av">JR</span><div><b>Jane Roshan</b><span>Chief Risk Officer · Meridian Federal</span></div></div>
+      </div>
+      <div class="psr">
+        <div class="row rv" data-rv><div class="k">Problem</div><p>Findings lived in email threads and spreadsheets, so nobody trusted the numbers at review time.</p></div>
+        <div class="row rv" data-rv><div class="k">Solution</div><p>AffirmX centralised monitoring and routed every finding to a clear owner and due date.</p></div>
+        <div class="row rv" data-rv><div class="k">Result</div><p>Review prep dropped from weeks to days, with a full audit trail behind every decision.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights pad" id="insights">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow rv" data-rv>Insights &amp; trends</span><h2 class="rv" data-rv>What we're reading, building, and thinking about.</h2></div>
+    <div class="acards">
+      <article class="acard rv" data-rv>
+        <div class="img"><svg viewBox="0 0 300 158" preserveAspectRatio="none"><path d="M0,120 Q75,60 150,90 T300,50" stroke="rgba(255,255,255,.75)" stroke-width="2.5" fill="none"/></svg></div>
+        <div class="body"><span class="k">Automation</span><h3>Where AI in compliance actually earns its keep</h3><p>The honest version: not every workflow should be automated. Here's how to tell which ones pay off.</p><a class="read" href="#">Read article <span class="arrow">→</span></a></div>
+      </article>
+      <article class="acard rv" data-rv>
+        <div class="img"><svg viewBox="0 0 300 158" preserveAspectRatio="none"><path d="M0,90 Q75,130 150,70 T300,100" stroke="rgba(255,255,255,.75)" stroke-width="2.5" fill="none"/></svg></div>
+        <div class="body"><span class="k">Modeling</span><h3>Predictive risk modeling for community banks</h3><p>You don't need a data science team to forecast exposure. You need the right signals, watched well.</p><a class="read" href="#">Read article <span class="arrow">→</span></a></div>
+      </article>
+      <article class="acard rv" data-rv>
+        <div class="img"><svg viewBox="0 0 300 158" preserveAspectRatio="none"><path d="M0,70 Q75,100 150,110 T300,60" stroke="rgba(255,255,255,.75)" stroke-width="2.5" fill="none"/></svg></div>
+        <div class="body"><span class="k">Regulation</span><h3>Reading the 2026 examiner playbook</h3><p>What's changed in supervisory priorities this year, and what it means for your next review cycle.</p><a class="read" href="#">Read article <span class="arrow">→</span></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITY NETWORK -->
+<section class="pad" id="net">
+  <div class="wrap net-grid">
+    <div class="net-stage" id="netStage">
+      <svg viewBox="0 0 460 440" id="netSvg" aria-label="AffirmX capability network">
+        <g id="netLinks"></g><g class="hexg" id="netNodes"></g>
+      </svg>
+    </div>
+    <div class="net-copy">
+      <span class="eyebrow rv" data-rv>The platform</span>
+      <h2 class="rv" data-rv style="font-size:clamp(1.9rem,3.6vw,2.6rem);margin-top:14px">Every capability, working off the same source of truth.</h2>
+      <div class="feat rv" data-rv><span class="ic">⬡</span><div><b>Cybersecurity risk</b><span>Continuous control monitoring with vendor and identity exposure surfaced in one view, scored against your own thresholds.</span></div></div>
+      <div class="feat rv" data-rv><span class="ic">⟲</span><div><b>Findings &amp; remediation</b><span>Every issue gets an owner, a due date, and an audit trail, so nothing slips between review cycles.</span></div></div>
+      <div class="feat rv" data-rv><button class="btn btn-primary" onclick="document.getElementById('cta').scrollIntoView()">Explore the platform →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pad" id="cta" style="padding-top:20px">
+  <div class="wrap">
+    <div class="cta rv" data-rv>
+      <div class="inner">
+        <div>
+          <h2>Let's <span class="o">work</span> together</h2>
+          <p>Tell us about your products and services, and we'll tailor a walkthrough to your institution's risk profile.</p>
+          <div class="contacts">
+            <div class="c"><span class="av">CP</span><div><b>Contact</b><span>hello@affirmx.com</span></div></div>
+            <div class="c"><span class="av">JR</span><div><b>Sales</b><span>sales@affirmx.com</span></div></div>
+            <div class="c"><span class="av">JK</span><div><b>Support</b><span>support@affirmx.com</span></div></div>
+          </div>
+        </div>
+        <div class="form">
+          <label for="email">Company email</label>
+          <input id="email" type="email" placeholder="you@institution.com" />
+          <label for="org">Institution</label>
+          <input id="org" type="text" placeholder="Meridian Federal" />
+          <button class="btn btn-primary" id="submitBtn">Submit request</button>
+          <div class="ok" id="okMsg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#"><span class="bars"><i></i><i></i><i></i><i></i></span><span class="word">Affirm<b>X</b></span></a>
+    <span class="copy">© 2026 AffirmX. Risk intelligence for financial institutions.</span>
+    <div class="social"><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Email">@</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // animated data-network background in hero
+  (function(){
+    const c=document.getElementById('netbg');if(!c)return;
+    const ctx=c.getContext('2d');const dpr=Math.min(window.devicePixelRatio||1,2);
+    let w,h,pts,raf;
+    function size(){w=c.width=c.offsetWidth*dpr;h=c.height=c.offsetHeight*dpr;}
+    function init(){const n=Math.min(78,Math.floor(c.offsetWidth*c.offsetHeight/14000));pts=[];for(let i=0;i<n;i++)pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*0.22*dpr,vy:(Math.random()-.5)*0.22*dpr});}
+    const MAX=130*dpr;
+    function frame(move){
+      ctx.clearRect(0,0,w,h);
+      if(move)for(const p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;}
+      for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);
+        if(d<MAX){const a=0.16*(1-d/MAX);ctx.strokeStyle='rgba(140,198,63,'+a+')';ctx.lineWidth=dpr;ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}
+      }
+      for(const p of pts){ctx.fillStyle='rgba(120,196,224,.75)';ctx.beginPath();ctx.arc(p.x,p.y,1.7*dpr,0,7);ctx.fill();}
+      if(move)raf=requestAnimationFrame(()=>frame(true));
+    }
+    function start(){size();init();if(reduce){frame(false);}else{cancelAnimationFrame(raf);frame(true);}}
+    start();
+    let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(start,200);});
+  })();
+
+  const hdr=document.getElementById('hdr');
+  const onScroll=()=>hdr.classList.toggle('scrolled',window.scrollY>30);
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  document.getElementById('submitBtn').addEventListener('click',()=>{
+    const e=document.getElementById('email').value.trim();const msg=document.getElementById('okMsg');
+    if(!e||!e.includes('@')){msg.style.color='#bfe88a';msg.textContent='Enter a valid email to continue.';return;}
+    msg.style.color='';msg.textContent='Thanks, we\u2019ll reach out within one business day.';
+    document.getElementById('email').value='';document.getElementById('org').value='';
+  });
+
+  const NS='http://www.w3.org/2000/svg';
+  const nodes=[
+    {x:230,y:215,r:64,label:['AffirmX'],center:true},
+    {x:230,y:78,r:48,label:['Compliance','Monitoring']},
+    {x:360,y:150,r:48,label:['Cybersecurity','Risk']},
+    {x:360,y:300,r:48,label:['Internal','Audit']},
+    {x:230,y:372,r:48,label:['Findings &','Remediation']},
+    {x:100,y:300,r:48,label:['Identity &','Vulnerability']},
+    {x:100,y:150,r:48,label:['Vendor','Management']},
+  ];
+  function hexPoints(cx,cy,r){let p='';for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-90);p+=(cx+r*Math.cos(a))+','+(cy+r*Math.sin(a))+' ';}return p.trim();}
+  const linksG=document.getElementById('netLinks'),nodesG=document.getElementById('netNodes');
+  for(let i=1;i<nodes.length;i++){const l=document.createElementNS(NS,'line');l.setAttribute('x1',nodes[0].x);l.setAttribute('y1',nodes[0].y);l.setAttribute('x2',nodes[i].x);l.setAttribute('y2',nodes[i].y);l.setAttribute('class','net-link'+(i<=3?' live':''));linksG.appendChild(l);}
+  nodes.forEach((n)=>{
+    const g=document.createElementNS(NS,'g');g.setAttribute('class','node'+(n.center?' center':''));g.style.transformOrigin=n.x+'px '+n.y+'px';
+    const poly=document.createElementNS(NS,'polygon');poly.setAttribute('points',hexPoints(n.x,n.y,n.r));poly.setAttribute('class','hx');g.appendChild(poly);
+    n.label.forEach((ln,j)=>{const t=document.createElementNS(NS,'text');t.setAttribute('x',n.x);t.setAttribute('y',n.y+(j-(n.label.length-1)/2)*14+4);t.setAttribute('class','lab');if(n.center)t.setAttribute('font-size','15');t.textContent=ln;g.appendChild(t);});
+    nodesG.appendChild(g);
+  });
+
+  if(reduce){document.querySelectorAll('[data-rv]').forEach(el=>el.classList.remove('rv'));return;}
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl=gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.from('.hero-copy [data-rv]',{y:26,opacity:0,duration:.7,stagger:.08,onStart(){document.querySelectorAll('.hero-copy [data-rv]').forEach(e=>e.classList.remove('rv'));}})
+    .from('#dash .dash-card',{y:40,opacity:0,duration:.9},'-=.5')
+    .from(['#f1','#f2'],{scale:.7,opacity:0,duration:.6,stagger:.15},'-=.4');
+  const line=document.getElementById('line');const len=line.getTotalLength();line.style.strokeDasharray=len;line.style.strokeDashoffset=len;
+  tl.to(line,{strokeDashoffset:0,duration:1.3,ease:'power2.inOut'},'-=.6').to('#area',{opacity:1,duration:.6},'-=.5');
+  gsap.to('#f1',{y:'+=10',duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'});
+  gsap.to('#f2',{y:'-=10',duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut'});
+
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const end=+el.dataset.count,suf=el.dataset.suffix||'';const obj={v:0};
+    ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter(){gsap.to(obj,{v:end,duration:1.6,ease:'power2.out',onUpdate(){el.textContent=Math.round(obj.v).toLocaleString()+suf;}});}});
+  });
+  gsap.to('#dash',{yPercent:-8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+  gsap.utils.toArray('[data-rv]').forEach(el=>{
+    if(el.closest('.hero-copy'))return;
+    gsap.fromTo(el,{y:34,opacity:0},{y:0,opacity:1,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',once:true},onStart(){el.classList.remove('rv');}});
+  });
+  ScrollTrigger.create({trigger:'[data-bars]',start:'top 85%',once:true,onEnter(){gsap.from('[data-bars] i',{scaleY:0,transformOrigin:'bottom',duration:.7,stagger:.07,ease:'power2.out'});}});
+
+  const links=document.querySelectorAll('.net-link');
+  links.forEach(l=>{const L=l.getTotalLength();l.style.strokeDasharray=L;l.style.strokeDashoffset=L;});
+  ScrollTrigger.create({trigger:'#netStage',start:'top 80%',once:true,onEnter(){
+    const t=gsap.timeline();
+    t.from('.hexg .center',{scale:0,opacity:0,duration:.6,ease:'back.out(1.7)',transformOrigin:'center'})
+     .to('.net-link',{strokeDashoffset:0,duration:.7,stagger:.06,ease:'power2.out'},'-=.2')
+     .from('.hexg .node:not(.center)',{scale:0,opacity:0,duration:.5,stagger:.08,ease:'back.out(1.6)',transformOrigin:'center'},'-=.5');
+  }});
+  gsap.utils.toArray('.hexg .node:not(.center)').forEach((g,i)=>{gsap.to(g,{y:i%2?6:-6,duration:2.6+i*0.2,repeat:-1,yoyo:true,ease:'sine.inOut',delay:i*0.1});});
+})();
+</script>
